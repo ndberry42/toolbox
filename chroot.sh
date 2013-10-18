@@ -68,7 +68,7 @@ PASSWORD="$(randpass 10 0)"
 ##############
 #Create Group#
 ##############
-echo "Creating newe user...";
+echo "Creating new user...";
 
 GROUP_CHECK="$(getent group|grep sftponly)"
 GROUP_COMPARE="$(getent group|grep sftponly|awk '{gsub(":", " ");print $1}')"
@@ -95,7 +95,7 @@ else
 	echo $PASSWORD|passwd "$USERNAME" --stdin
 	echo "User Creds: ";
 	echo "Username: "$USERNAME
-	echo "Password: " $PASSWORD
+	echo "Password: "$PASSWORD
 fi
 
 
