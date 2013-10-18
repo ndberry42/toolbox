@@ -1,8 +1,30 @@
-#!/bin/sh
+#!/bin/bash
 
 #Written by Nolan Berry
 #nolan.berry@rackspace.com
 #
+
+echo "
+░░░░░░░░░░░░░▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
+░░░░░░░░▄▄▄░░▀█████████░░░░░░░░░░░
+░░░░░░▄█████▄▄░▀▀██████▄░██▄░░░░░░
+░░░░▄██████████▄░░▀█████░░███▄░░░░
+░░▄██████▀▀▀▀▀▀▀▀░░░▀███░░█████▄░░
+░░░░░░░░░░░░░░░░░░░░░░░▀░░██████░░
+░████████▀░░░░░░░░░░░░░░░░█████▀░░
+███████▀░░░░░░░░░░░░░░░░░░███▀░▄██
+█████▀░░░░░░░░░░░░░░░░░░░░█▀░░▄███
+███▀░░▄█░░░░░░░░░░░░░░░░░░░░▄█████
+██▀░▄███░░░░░░░░░░░░░░░░░░▄███████
+░░░█████░░░░░░░░░░░░░░░░▄████████░
+░░██████░░▄▄░░░░░░░░░░░░▀▀▀▀░░░░░░
+░░▀█████░░███▄░░░░▄▄▄▄▄▄▄▄▄████▀░░
+░░░░▀███░░█████▄░░▀██████████▀░░░░
+░░░░░░▀█░░░███████▄░░▀█████▀░░░░░░
+░░░░░░░░░░░█████████▄░░▀▀▀░░░░░░░░
+░░░░░░░░░░░░░▀▀▀▀▀▀▀▀░░░░░░░░░░░░░
+";
+
 
 
 ##
@@ -34,7 +56,7 @@ read CHROOT_DIR
 ####
 echo "Generating Complex Password: ";
 
-function randpass() {
+function randpass(){
   [ "$2" == "0" ] && CHAR="[:alnum:]" || CHAR="[:graph:]"
     cat /dev/urandom | tr -cd "$CHAR" | head -c ${1:-32}
     echo
@@ -70,7 +92,7 @@ else
 	echo "Creating new user";
 	useradd -s /bin/false -G sftponly -d $CHROOT_DIR $USERNAME
 	echo "Adding Password..."
-	echo $PASSWORD | passwd $USERNAME --stdin
+	echo $PASSWORD|passwd "$USERNAME" --stdin
 	echo "User Creds: ";
 	echo "Username: "$USERNAME
 	echo "Password: " $PASSWORD
