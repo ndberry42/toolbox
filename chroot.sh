@@ -27,9 +27,9 @@ echo "
 
 
 
-##
-#Check version and print it out
-##
+################################
+#Check version and print it out#
+################################
 echo "Checking the Distro Type and Version"
 if [ -s /etc/redhat-release ]; then
         DIST_VER="$(cat /etc/redhat-release)"
@@ -42,18 +42,18 @@ else
         echo $DIST_VER;
 fi
 
-###			####
+############################
 #Define Domain and Username#
-###		        ####
+############################
 
 echo "Please enter desired username: ";
 read USERNAME
 echo "What is the directory to jail to?: ";
 read CHROOT_DIR
 
-####
-#Password Generator Section
-####
+############################
+#Password Generator Section#
+############################
 echo "Generating Complex Password: ";
 
 function randpass(){
@@ -65,9 +65,9 @@ function randpass(){
 PASSWORD="$(randpass 10 0)"
 
 
-###
-#Create Group
-##
+##############
+#Create Group#
+##############
 echo "Creating newe user...";
 
 GROUP_CHECK="$(getent group|grep sftponly)"
@@ -79,9 +79,9 @@ else
 	echo "sftponly group already created";
 fi
 
-####
-#Create Account
-###
+################
+#Create Account#
+################
 
 USER_CHECK="$(cat /etc/passwd|grep $USERNAME|awk '{gsub(":", " ");print $1}')"
 
@@ -99,9 +99,9 @@ else
 fi
 
 
-####################
-#Check for bad backport CentOS Version
-####################
+#######################################
+#Check for bad backport CentOS Version#
+#######################################
 
 if [ $DIST_NUM = "5.8" ]; then
         echo "This Version of CentOS is not supported, Sorry."
