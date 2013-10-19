@@ -132,8 +132,8 @@ else
 				if [ "$SSHD_RESTART" == Y ]; then
 					service sshd restart
 				else
-					if [ "$SSH_RESTART" == n ]; then
-						echo "SSHD will not be restarted";
+					if [ "$SSHD_RESTART" == n ]; then
+						echo "sshd will not be restarted";
 					else
 						echo "Please check what you typed and try again.";
 					fi
