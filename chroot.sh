@@ -110,7 +110,7 @@ else
         if [ -s /etc/ssh/sshd_config ]; then
                 echo "Checking sshd_config...";
                 SUBSYSTEM="$(grep Subsystem /etc/ssh/sshd_config|awk '{print $3}')"
-                SUBSYS_LN=$(grep -n Subsystem /etc/ssh/sshd_config|awk '{gsub(":", " ");print $1}')
+                SUBSYS_LN="$(grep -n Subsystem /etc/ssh/sshd_config|awk '{gsub(":", " ");print $1}')"
                 SUBSYS_NEW='internal-sftp'
                 SUBSYS_OLD='/usr/libexec/openssh/sftp-server'
 
