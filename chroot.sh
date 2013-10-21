@@ -33,7 +33,6 @@ RED=$(tput setaf 1)
 GREEN=$(tput setaf 2)
 NORMAL=$(tput sgr0)
 
-col=80
 
 ################################
 #Check version and print it out#
@@ -42,12 +41,11 @@ echo "Checking the Distro Type and Version"
 if [ -s /etc/redhat-release ]; then
         DIST_VER="$(cat /etc/redhat-release)"
         DIST_NUM="$(cat /etc/redhat-release|awk '{print $3}')"
-        echo $DIST_VER;
+        echo $DIST_VER "$GREEN"  "[OK]" $NORMAL
 else
         DIST_VER="$(lsb_release -d|awk '{print $2" "$3}')"
         DIST_NUM="$(lsb_release -r|awk '{print $2}')"
-
-        echo $DIST_VER;
+        echo $DIST_VER "$GREEN" "[OK]" $NORMAL;
 fi
 
 ############################
@@ -62,11 +60,17 @@ read CHROOT_DIR
 ###############################
 #Quick check of logged in user#
 ###############################
+#This isnt quite working right yet.
+
 
 WHOAMI="$(whoami)"
 if [ $WHOMAI == $USERNAME ]; then
-	printf 'You cannot modify the account you are logged in as' "$RED" $col "[FAIL]" "$NORMAL"
+        echo 'You cannot modify the account you are logged in as' "$RED" "[FAIL]" $NORMAL
 	exit
+else
+        echo 'You are using a correct account' "$GREEN" "[OK]" $NORMAL
+fi
+
 fi	
 
 
@@ -94,9 +98,10 @@ GROUP_COMPARE="$(getent group|grep sftponly|awk '{gsub(":", " ");print $1}')"
 if [ $GROUP_CHECK != $GROUP_COMPARE ]; then
 	echo "Creating sftpgroup";
 	groupadd sftponly
-	printf 'Group sftponly added sucessfully' "$GREEN" $col "[OK]" "$NORMAL"
+        echo 'Group sftponly added sucessfully' "$GREEN" "[OK]" $NORMAL
+
 else
-	printf 'sftponly group already created' "$GREEN" $col "[OK]" "$NORMAL"
+        echo 'sftponly group already created' "$GREEN" "[OK]" $NORMAL
 fi
 
 ################
@@ -125,8 +130,8 @@ fi
 #######################################
 
 if [ $DIST_NUM = "5.8" ]; then
-        printf 'This version is not supported, sorry.' "$RED" $col "[FAIL]" "$NORMAL"
-        exit
+        echo 'This version is not supported, sorry.' "$RED" "[FAIL]" $NORMAL
+	exit
 else
         if [ -s /etc/ssh/sshd_config ]; then
                 echo "Checking sshd_config...";
