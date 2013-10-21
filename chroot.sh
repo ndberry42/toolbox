@@ -25,7 +25,15 @@ echo "
 ░░░░░░░░░░░░░▀▀▀▀▀▀▀▀░░░░░░░░░░░░░
 ";
 
+#################
+#Format and such#
+#################
 
+RED=$(tput setaf 1)
+GREEN=$(tput setaf 2)
+NORMAL=$(tput sgr0)
+
+col=80
 
 ################################
 #Check version and print it out#
@@ -51,6 +59,17 @@ read USERNAME
 echo "What is the directory to jail to?: ";
 read CHROOT_DIR
 
+###############################
+#Quick check of logged in user#
+###############################
+
+WHOAMI="$(whoami)"
+if [ $WHOMAI == $USERNAME ]; then
+	printf 'You cannot modify the account you are logged in as' "$RED" $col "[FAIL]" "$NORMAL"
+	exit
+fi	
+
+
 ############################
 #Password Generator Section#
 ############################
@@ -75,8 +94,9 @@ GROUP_COMPARE="$(getent group|grep sftponly|awk '{gsub(":", " ");print $1}')"
 if [ $GROUP_CHECK != $GROUP_COMPARE ]; then
 	echo "Creating sftpgroup";
 	groupadd sftponly
+	printf 'Group sftponly added sucessfully' "$GREEN" $col "[OK]" "$NORMAL"
 else
-	echo "sftponly group already created";
+	printf 'sftponly group already created' "$GREEN" $col "[OK]" "$NORMAL"
 fi
 
 ################
@@ -88,6 +108,7 @@ USER_CHECK="$(cat /etc/passwd|grep $USERNAME|awk '{gsub(":", " ");print $1}')"
 if [ $USER_CHECK = $USERNAME ]; then
 	echo "Modifying exising User";
 	usermod -s /bin/false -G sftponly -d $CHROOT_DIR $USERNAME
+	
 else
 	echo "Creating new user";
 	useradd -s /bin/false -G sftponly -d $CHROOT_DIR $USERNAME
@@ -104,7 +125,7 @@ fi
 #######################################
 
 if [ $DIST_NUM = "5.8" ]; then
-        echo "This Version of CentOS is not supported, Sorry."
+        printf 'This version is not supported, sorry.' "$RED" $col "[FAIL]" "$NORMAL"
         exit
 else
         if [ -s /etc/ssh/sshd_config ]; then
@@ -113,8 +134,6 @@ else
                 SUBSYS_LN="$(grep -n Subsystem /etc/ssh/sshd_config|awk '{gsub(":", " ");print $1}')"
                 SUBSYS_NEW='internal-sftp'
                 SUBSYS_OLD='/usr/libexec/openssh/sftp-server'
-
-	##Testing variable values
 
                   if [ $SUBSYSTEM == $SUBSYS_NEW ]; then
                                 echo "Subsystem already set!";
