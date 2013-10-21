@@ -1,1 +1,4 @@
-Some Handy Scripts I have written to help with the day to day of Linux Admin work.
+Some scripts I have written to help me with my day to day work.  Let me know if you have any questions or run into any issues.
+
+Nolan Berry
+nolan.berry@rackspace.com
