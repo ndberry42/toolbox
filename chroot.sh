@@ -70,7 +70,7 @@ PASSWORD="$(randpass 10 0)"
 ##############
 echo "Creating new user...";
 
-GROUP_CHECK="$(getent group|grep sftponly)"
+GROUP_CHECK="sftponly"
 GROUP_COMPARE="$(getent group|grep sftponly|awk '{gsub(":", " ");print $1}')"
 if [ $GROUP_CHECK != $GROUP_COMPARE ]; then
 	echo "Creating sftpgroup";
