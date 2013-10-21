@@ -48,5 +48,5 @@ echo "Checking access logs for most frequent IPs from today:"
 cat /var/log/$WEBSERVER/*access*|grep $TODAY|awk '{print $1}'|sort -n|uniq -c|sort -n|tail -n 20
 echo "Getting Country Information for IPs"
 cat /var/log/$WEBSERVER/*access*|grep $TODAY|awk '{print $1}'|sort|uniq|while IFS= read -r ip ; do
-    whois "$ip"|grep 'Country'
+   echo $ip:$(whois "$ip"|grep 'Country'|awk '{print $2}')
 done
