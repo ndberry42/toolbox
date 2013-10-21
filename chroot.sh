@@ -64,7 +64,7 @@ read CHROOT_DIR
 
 
 WHOAMI="$(whoami)"
-if [ $WHOMAI == $USERNAME ]; then
+if [ $WHOAMI == $USERNAME ]; then
         echo 'You cannot modify the account you are logged in as' "$RED" "[FAIL]" $NORMAL
 	exit
 else
