@@ -71,8 +71,6 @@ else
         echo 'You are using a correct account' "$GREEN" "[OK]" $NORMAL
 fi
 
-fi	
-
 
 ############################
 #Password Generator Section#
