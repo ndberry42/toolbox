@@ -139,7 +139,11 @@ fi
                         echo "Would you like to reload the webserver config?(Yes/No)"
                         read RELOAD
                         if [ $RELOAD = Yes ]; then
-                        service apache2 reload
+                        	if [ $WEBSERVER = httpd ]; then
+					/etc/init.d/httpd reload
+				else
+					service apache2 reload
+				fi
                		else
                         	if [ $RELOAD = No ]; then
                                 	echo "apache2 will not be reloaded."
