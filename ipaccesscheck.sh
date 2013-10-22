@@ -55,6 +55,6 @@ if [ -s /var/log/$WEBSERVER/ ]; then
    	echo $ip:$(whois "$ip"|grep 'Country'|awk '{print $2}')
 	done
 else
-	echo "No webserver found.";
+	echo "No webserver found, or logging is not setup as expected";
 fi
 
