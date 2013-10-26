@@ -144,6 +144,8 @@ else
                                 echo "Switching Subsystem for sFTP Chroot support";
                                 echo "Removing Old Subsytem directives"; 
 				sed '/Subsystem/d' /etc/ssh/sshd_config>/etc/ssh/sshd_config
+				echo "Creating backup of sshd_config";
+				cp /etc/ssh/sshd_config /root/
 				echo "Adding new Subsystem Directives and Mappings";
 					echo "Subsystem       sftp    internal-sftp">>/etc/ssh/sshd_config
 					echo "Match Group sftponly">>/etc/ssh/sshd_config
@@ -152,8 +154,11 @@ else
 					echo "Would you like to reload sshd? (Y/n)"
 					read SSHD_RESTART
 				if [ "$SSHD_RESTART" == Y ]; then
-					service sshd restart
-				else
+					if [ -s /etc/init.d/sshd ]; then 
+						service sshd restart
+					else
+						service ssh restart
+				else	
 					if [ "$SSHD_RESTART" == n ]; then
 						echo "sshd will not be restarted";
 					else
